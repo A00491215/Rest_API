@@ -1,5 +1,7 @@
 # Hotel Reservation System REST API
 
+**🔴 Live Deployment (Swagger API Specs):** [https://krushimistry.pythonanywhere.com/api/docs/](https://krushimistry.pythonanywhere.com/api/docs/)
+
 This is a REST API for a Hotel Reservation System developed using Django Rest Framework. It allows querying available hotels based on requested dates and creating hotel reservations with specific guests.
 
 ## Features
