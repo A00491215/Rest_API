@@ -5,7 +5,17 @@ from django.db.models import Q
 from .models import Hotel, Reservation
 from .serializers import HotelSerializer, ReservationSerializer
 from datetime import datetime
+from drf_spectacular.utils import extend_schema, OpenApiParameter, OpenApiExample
+from drf_spectacular.types import OpenApiTypes
 
+@extend_schema(
+    parameters=[
+        OpenApiParameter(name='checkin', description='Check-in date (YYYY-MM-DD)', required=False, type=OpenApiTypes.DATE),
+        OpenApiParameter(name='checkout', description='Check-out date (YYYY-MM-DD)', required=False, type=OpenApiTypes.DATE),
+    ],
+    responses={200: HotelSerializer(many=True), 400: OpenApiTypes.OBJECT},
+    description="Returns the list of hotels available in the system.",
+)
 @api_view(['GET'])
 def getListOfHotels(request):
     checkin = request.query_params.get('checkin')
@@ -35,6 +45,28 @@ def getListOfHotels(request):
     serializer = HotelSerializer(hotels, many=True)
     return Response(serializer.data)
 
+@extend_schema(
+    request=ReservationSerializer,
+    responses={201: OpenApiTypes.OBJECT, 400: OpenApiTypes.OBJECT},
+    description="Creates a hotel reservation and returns a confirmation number.",
+    examples=[
+        OpenApiExample(
+            'Example Request',
+            value={
+                "hotel_name": "The Grand Halifa",
+                "checkin": "2026-04-10",
+                "checkout": "2026-04-15",
+                "guests_list": [
+                    {
+                        "guest_name": "John Doe",
+                        "gender": "Male"
+                    }
+                ]
+            },
+            request_only=True,
+        )
+    ]
+)
 @api_view(['POST'])
 def reservationConfirmation(request):
     serializer = ReservationSerializer(data=request.data)
