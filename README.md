@@ -6,7 +6,6 @@ This is a REST API for a Hotel Reservation System developed using Django Rest Fr
 * Retrieve a list of available hotels for given check-in and check-out dates.
 * Create a hotel reservation that includes associated guest details.
 * The API utilizes SQLite as the persistence mechanism for simplicity and ease of testing.
-* Designed for deployment on AWS Elastic Beanstalk.
 
 ## Prerequisites
 * Python 3.9+
@@ -113,9 +112,3 @@ GET /api/getListOfHotels/?checkin=2026-04-10&checkout=2026-04-15
     "confirmation_number": "54de69c8-d9d1-41ee-82c5-3c12f8623514"
 }
 ```
-
-## Elastic Beanstalk Deployment
-This project contains the `.ebextensions/django.config` required for deployment to AWS Elastic Beanstalk. To deploy:
-1. Zip the project files (excluding `venv` and `.git`).
-2. Upload the zip to the Elastic Beanstalk console running a Python environment.
-3. Beanstalk will automatically locate the WSGI application and start the server.
